@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{data.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <img [src]="imageSource" />
+    <ion-card-header>
+      <ion-card-subtitle>Character</ion-card-subtitle>
+      <ion-card-title>{{data.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{data.description}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button color="primary" shape="round" expand="block">View Stories</ion-button>
+</ion-content>
