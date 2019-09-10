@@ -1,3 +1,6 @@
-<p>
-  character-comic works!
-</p>
+<ion-item button (click)="openCharacterDetailsWithParams()">
+  <ion-thumbnail slot="start">
+      <ion-img [src]="imageSource"></ion-img>
+  </ion-thumbnail>
+  <ion-label>{{characterComic.title}}</ion-label>
+</ion-item>
