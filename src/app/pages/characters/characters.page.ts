@@ -41,8 +41,8 @@ export class CharactersPage implements OnInit {
         this.characters = [...this.characters, ...res['data'].results];
         //show all array elements after the offset
         this.displayCharacters = this.characters.slice(this.offset);
-        //set total
-        this.totalPages = res['data'].total;
+        //set total no of pages
+        this.totalPages = (res['data'].total < this.limit)? 1 : Math.trunc(res['data'].total/this.limit)+1;
         //disable spinner
         // this.loading.dismiss();
         this.loadingController.dismiss();
