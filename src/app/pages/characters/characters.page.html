@@ -1,20 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>characters</ion-title>
+  <ion-toolbar color="danger" >
+    <ion-title>Meet your super heros !!</ion-title>
   </ion-toolbar>
+  <ion-searchbar placeholder="Search by name ... " (ionInput)="searchCharacter($event)"></ion-searchbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar placeholder="Enter Marvel Character Name" (ionInput)="searchCharacter($event)"></ion-searchbar>
-  <ion-list>
+  <ion-list >
     <app-character [query]="query" [character]="character" *ngFor="let character of displayCharacters"></app-character>
   </ion-list>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
       <ion-icon button size="large" slot="start" name="arrow-round-back" (click)="previousPage()"></ion-icon>
-      <!-- <ion-title>Footer</ion-title> -->
+      <ion-title> Page {{ pageNumber }} of {{ totalPages }}</ion-title>
       <ion-icon button size="large" slot="end" name="arrow-round-forward" (click)="nextPage()"></ion-icon>
   </ion-toolbar>
 </ion-footer>
