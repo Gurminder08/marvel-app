@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterComicsService } from 'src/app/services/character-comics.service';
 import { CharacterComics } from 'src/app/models/character-comics';
 
-
 @Component({
   selector: 'app-character-comics',
   templateUrl: './character-comics.page.html',
@@ -11,10 +10,13 @@ import { CharacterComics } from 'src/app/models/character-comics';
 })
 export class CharacterComicsPage implements OnInit {
 
-  id:number;
+  id: number;
+  totalComics: number;
+  limit: number = 20;
+  offset: number = 0;
   characterComics: CharacterComics[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, public api: CharacterComicsService) { 
+  constructor(private route: ActivatedRoute, private router: Router, public api: CharacterComicsService) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.id = this.router.getCurrentNavigation().extras.state.id;
@@ -23,18 +25,38 @@ export class CharacterComicsPage implements OnInit {
     });
   }
 
-    ngOnInit() {
-      this.getCharacterComics();
+  ngOnInit() {
+    this.getCharacterComics();
   }
 
   async getCharacterComics() {
-    await this.api.getCharacterComics(0, 20, this.id)
+    await this.api.getCharacterComics(this.offset, this.limit, this.id)
       .subscribe(res => {
-        this.characterComics = res['data'].results;
+        this.characterComics = [...this.characterComics,...res['data'].results];
+        this.totalComics = res['data'].total;
         console.log(this.characterComics[0].prices[0].price);
       }, err => {
         console.log(err);;
       });
   }
+
+    // trigger on scroll event when threshold reaches (100px)
+    loadData(event) {
+      setTimeout(() => {
+        //App logic to determine if all data is loaded and disable the infinite scroll
+        if (this.characterComics.length >= this.totalComics) {
+          event.target.disabled = true;
+        }else{
+          this.offset += this.limit;
+          this.addMoreComics();
+          event.target.complete();
+        }       
+      }, 1000);
+    }
+  
+    // adding 10 character comics each time scroll event accours
+    addMoreComics() {
+      this.getCharacterComics();
+    }
 
 }
