@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../../services/character-service.service';
 import { Character } from '../../models/character';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-characters',
@@ -11,44 +12,73 @@ export class CharactersPage implements OnInit {
 
   characters: Character[] = [];
   displayCharacters: Character[] = [];
-  startNum: number = 0;
-  endNum: number = 20;
-  characterDisplay:boolean=false;
-  query:string;
+  characterDisplay: boolean = false;
+  query: string;
 
-  constructor(public api: CharacterService) { }
+  offset: number = 0;
+  limit: number = 20;
+  totalPages: number;
+  pageNumber: number = 1;
+  loading: any;
+
+  constructor(public api: CharacterService, public loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getCharacters();
   }
 
   async getCharacters() {
-    await this.api.getCharacters()
+
+    //Load spinner
+    await this.loadingController.create({
+      message: 'Assembling more heros ...',
+      duration: 20000
+    }).then(loading => loading.present());
+
+    await this.api.getCharacters(this.offset, this.limit)
       .subscribe(res => {
-        this.characters = res['data'].results;
-        this.displayCharacters = this.characters.slice(0, this.endNum);
+        //Merge previous list and new list of characters using ES6 spread operator 
+        this.characters = [...this.characters, ...res['data'].results];
+        //show all array elements after the offset
+        this.displayCharacters = this.characters.slice(this.offset);
+        //set total
+        this.totalPages = res['data'].total;
+        //disable spinner
+        // this.loading.dismiss();
+        this.loadingController.dismiss();
       }, err => {
         console.log(err);;
       });
   }
 
   nextPage() {
-    if (this.endNum < this.characters.length) {
-      this.startNum += 20;
-      this.endNum += 20;
-      this.displayCharacters = this.characters.slice(this.startNum, this.endNum);
+    if ((this.characters.length) / (this.limit * (this.pageNumber + 1)) >= 1) {
+      // Get superheroes from the existing characters array
+      this.pageNumber++;
+      let sliceTo = this.pageNumber * this.limit;
+      let sliceFrom = sliceTo - this.limit;
+      this.displayCharacters = this.characters.slice(sliceFrom, sliceTo);
     }
+    else {
+      // Call for new superheroes
+      this.offset = this.offset + this.limit;
+      this.pageNumber++;
+      this.getCharacters();
+    }
+
   }
 
   previousPage() {
-    if (this.startNum > 0) {
-      this.startNum -= 20;
-      this.endNum -= 20;
-      this.displayCharacters = this.characters.slice(this.startNum, this.endNum);
+    if (this.pageNumber > 1) {
+      this.pageNumber--;
+      let sliceTo = this.pageNumber * this.limit;
+      let sliceFrom = sliceTo - this.limit;
+      this.displayCharacters = this.characters.slice(sliceFrom, sliceTo);
     }
   }
 
-  searchCharacter(event){
+  searchCharacter(event) {
     this.query = event.target.value.toLowerCase();
   }
+
 }
