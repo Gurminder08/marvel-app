@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>character-comics</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Comics</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <h1>Welcome to your character comics</h1>
+  <app-character-comic [characterComic]="characterComic" *ngFor="let characterComic of characterComics"></app-character-comic>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more comics...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
