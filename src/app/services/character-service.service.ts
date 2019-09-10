@@ -11,16 +11,28 @@ import { Character } from '../models/character';
 })
 export class CharacterService {
 
-  URL:string = `${BASE_URL}/characters?limit=100&ts=${TS}&apikey=${API_KEY}&hash=${MD5_HASH}` 
-
   constructor(private http: HttpClient) { }
 
     // get characters
-    getCharacters(): Observable<Character[]> {
-      return this.http.get<Character[]>(this.URL)
+    getCharacters(  offset: number , limit: number): Observable<Character[]> {
+      const paginatedURL = this.getPaginatedURL( offset, limit );     
+      
+      return this.http.get<Character[]>(paginatedURL)
         .pipe(
           tap(characters => console.log('fetched all characters')),
           catchError(handleError('getCharacters',[]))
         );
-    }    
+    }
+    
+    getPaginatedURL(offset: number , limit: number): string {
+      if( !limit ) {
+        limit = 20;
+      }
+
+      if( !offset ) {
+        offset = 0;
+      }
+
+      return `${BASE_URL}/characters?limit=${limit}&offset=${offset}&ts=${TS}&apikey=${API_KEY}&hash=${MD5_HASH}` ;
+    }
 }
