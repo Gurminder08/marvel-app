@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CharacterComicsPage } from './character-comics.page';
+import { CharacterComicComponent } from 'src/app/components/character-comic/character-comic.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CharacterComicsPage]
+  declarations: [CharacterComicsPage, CharacterComicComponent]
 })
 export class CharacterComicsPageModule {}
