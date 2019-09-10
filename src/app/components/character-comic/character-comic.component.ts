@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CharacterComics } from 'src/app/models/character-comics';
 
 @Component({
   selector: 'app-character-comic',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CharacterComicComponent implements OnInit {
 
+  @Input() characterComic: CharacterComics = <CharacterComics>{};
+  imageSource: string;
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.imageSource = `${this.characterComic.thumbnail.path}.${this.characterComic.thumbnail.extension}`;
+  }
 
 }
