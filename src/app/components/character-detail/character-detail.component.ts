@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router'
 
 @Component({
   selector: 'app-character-detail',
@@ -16,7 +16,6 @@ export class CharacterDetailComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.data = this.router.getCurrentNavigation().extras.state.character;
         this.imageSource = `${this.data.thumbnail.path}.${this.data.thumbnail.extension}`;
-        console.log(this.imageSource);
         console.log(this.data);
       }
     });
@@ -24,4 +23,14 @@ export class CharacterDetailComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  viewComics(){
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: this.data.id
+      }
+    };
+    this.router.navigate(['/characters',this.data.id,'comics'],navigationExtras);
+  }
+
 }
