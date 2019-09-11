@@ -1,4 +1,5 @@
 import {Price} from './price';
+import { Thumbnail } from './thumbnail';
 
 export class CharacterComics{
     id: number;
@@ -24,8 +25,8 @@ export class CharacterComics{
     collectedIssues: [];
     dates: [];
     prices: Price[];
-    thumbnail: {};
-    images: [];
+    thumbnail: Thumbnail;
+    images: Thumbnail;
     creators: {};
     characters: {};
     stories: {};
