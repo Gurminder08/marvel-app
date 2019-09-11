@@ -32,7 +32,9 @@ export class CharacterComicsPage implements OnInit {
 
   async getCharacterComics() {
     const loading = await this.loadingController.create({
-      message: 'Loading...'
+      message: 'Loading more comics...',
+      duration: 20000,
+      spinner: "dots"
     });
     await loading.present();
 
