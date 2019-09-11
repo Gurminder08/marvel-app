@@ -12,7 +12,7 @@
     <img [src]="imageSource" />
     <ion-card-header>
       <ion-card-subtitle outline color="danger">Comic
-        <ion-chip color="danger">
+        <ion-chip color="primary">
           <ion-icon name="pricetag"></ion-icon>
           <ion-label *ngIf = "data!==undefined && data.hasOwnProperty('prices')">{{data.prices[0].price}} $</ion-label>
         </ion-chip>
