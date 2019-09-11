@@ -11,7 +11,7 @@
   <ion-card>
     <img [src]="imageSource" />
     <ion-card-header>
-      <ion-card-subtitle outline color="danger">Comic
+      <ion-card-subtitle outline color="danger">
         <ion-chip color="success">
           <ion-icon name="pricetag"></ion-icon>
           <ion-label *ngIf = "data!==undefined && data.hasOwnProperty('prices')">{{data.prices[0].price}} $</ion-label>
@@ -25,7 +25,7 @@
 
     <ion-list>
       <ion-list-header>
-        <ion-label outline color="danger">Creaters</ion-label>
+        <ion-label outline color="danger">Creators</ion-label>
       </ion-list-header>
       <ng-container *ngFor="let creator of data.creators.items">
         <ion-item>{{creator.name}}</ion-item>
