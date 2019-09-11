@@ -1,18 +1,28 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button color="danger" defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title color="danger">COMICS</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <app-character-comic [characterComic]="characterComic" *ngFor="let characterComic of characterComics"></app-character-comic>
-
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more comics...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
-</ion-content>
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-back-button color="danger" defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="danger">COMICS</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <div *ngIf="characterComics && characterComics.length > 0; else noComicFound" >
+      <app-character-comic [characterComic]="characterComic" *ngFor="let characterComic of characterComics"></app-character-comic>
+    </div>
+    <ng-template #noComicFound>
+        <ion-card>
+          <ion-item>
+              <ion-label *ngIf="loaded" class="ion-text-wrap">
+                  This character is yet to be featured in comics.
+              </ion-label>
+          </ion-item>
+        </ion-card>     
+    </ng-template>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more comics...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  
+  </ion-content>

@@ -16,6 +16,7 @@ export class CharacterComicsPage implements OnInit {
   limit: number = 20;
   offset: number = 0;
   characterComics: CharacterComics[] = [];
+  loaded: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, public api: CharacterComicsService,public loadingController: LoadingController) {
     this.route.queryParams.subscribe(params => {
@@ -31,6 +32,8 @@ export class CharacterComicsPage implements OnInit {
   }
 
   async getCharacterComics() {
+    this.loaded = false;
+
     const loading = await this.loadingController.create({
       message: 'Loading more comics...',
       duration: 20000,
@@ -43,6 +46,7 @@ export class CharacterComicsPage implements OnInit {
         this.characterComics = [...this.characterComics,...res['data'].results];
         this.totalComics = res['data'].total;
         loading.dismiss();
+        this.loaded = true;
       }, err => {
         console.log(err);;
       });
