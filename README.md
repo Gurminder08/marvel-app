@@ -1,7 +1,7 @@
 # Marvel Characters Application
 
 A cross platform application that is capable of running on the web and mobile devices. It is built using the [ionic](https://ionicframework.com/) framework and 
-supports compatibility with Android as well as iOS devices. It uses marvel api [https://developer.marvel.com/] to make http requests and render marvel superhero data
+supports compatibility with Android as well as iOS devices. It uses marvel [api](https://developer.marvel.com/) to make http requests and render marvel superheroes data
 on the screen.
 
 The application consists of the following pages:
