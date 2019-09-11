@@ -1,20 +1,24 @@
 <ion-header>
-  <ion-toolbar color="danger" >
-    <ion-title>Meet your super heros !!</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title color="danger">
+      <div>MARVEL CHARACTERS</div>
+    </ion-title>
   </ion-toolbar>
-  <ion-searchbar placeholder="Search by name ... " (ionInput)="searchCharacter($event)"></ion-searchbar>
+  <ion-toolbar color="dark">
+    <ion-searchbar placeholder="Search by name ... " (ionInput)="searchCharacter($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list >
+  <ion-list>
     <app-character [query]="query" [character]="character" *ngFor="let character of displayCharacters"></app-character>
   </ion-list>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar color="danger">
-      <ion-icon button size="large" slot="start" name="arrow-round-back" (click)="previousPage()"></ion-icon>
-      <ion-title> Page {{ pageNumber }} of {{ totalPages }}</ion-title>
-      <ion-icon button size="large" slot="end" name="arrow-round-forward" (click)="nextPage()"></ion-icon>
+    <ion-icon button size="large" slot="start" name="arrow-round-back" (click)="previousPage()"></ion-icon>
+    <ion-title>Page {{ pageNumber }} of {{ totalPages }}</ion-title>
+    <ion-icon button size="large" slot="end" name="arrow-round-forward" (click)="nextPage()"></ion-icon>
   </ion-toolbar>
 </ion-footer>
