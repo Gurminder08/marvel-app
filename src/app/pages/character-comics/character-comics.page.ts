@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CharacterComicsService } from 'src/app/services/character-comics.service';
 import { CharacterComics } from 'src/app/models/character-comics';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-character-comics',
@@ -16,7 +17,7 @@ export class CharacterComicsPage implements OnInit {
   offset: number = 0;
   characterComics: CharacterComics[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, public api: CharacterComicsService) {
+  constructor(private route: ActivatedRoute, private router: Router, public api: CharacterComicsService,public loadingController: LoadingController) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.id = this.router.getCurrentNavigation().extras.state.id;
@@ -30,11 +31,16 @@ export class CharacterComicsPage implements OnInit {
   }
 
   async getCharacterComics() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+
     await this.api.getCharacterComics(this.offset, this.limit, this.id)
       .subscribe(res => {
         this.characterComics = [...this.characterComics,...res['data'].results];
         this.totalComics = res['data'].total;
-        console.log(this.characterComics[0].prices[0].price);
+        loading.dismiss();
       }, err => {
         console.log(err);;
       });
