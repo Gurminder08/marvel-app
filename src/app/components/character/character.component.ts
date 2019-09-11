@@ -22,7 +22,7 @@ export class CharacterComponent implements OnInit {
     this.imageSource = `${this.character.thumbnail.path}.${this.character.thumbnail.extension}`;
   }
 
-  openCharacterDetailsWithParams(){
+  openCharacterDetails(){
     let navigationExtras: NavigationExtras = {
       state: {
         character: this.character
