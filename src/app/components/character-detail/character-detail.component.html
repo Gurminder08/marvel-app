@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button color="danger" defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{data.name}}</ion-title>
+    <ion-title color="danger">SUPERHERO</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,15 +11,20 @@
   <ion-card>
     <img [src]="imageSource" />
     <ion-card-header>
-      <ion-card-subtitle>Character</ion-card-subtitle>
+      <ion-card-subtitle outline color="danger">Character</ion-card-subtitle>
       <ion-card-title>{{data.name}}</ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="data && data.description && data.description != ''; else noDescriptionFound">
       {{data.description}}
     </ion-card-content>
+    <ng-template #noDescriptionFound>
+      <ion-card-content>
+        No description found.
+      </ion-card-content>
+    </ng-template>
   </ion-card>
 </ion-content>
 
 <ion-footer>
-    <ion-button color="primary" shape="round" expand="block" (click)="viewComics()">View Comics</ion-button>
+  <ion-button color="danger" shape="round" expand="block" (click)="viewComics()">View Comics</ion-button>
 </ion-footer>
