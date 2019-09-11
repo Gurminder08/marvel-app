@@ -32,7 +32,8 @@ export class CharactersPage implements OnInit {
     //Load spinner
     await this.loadingController.create({
       message: 'Assembling more heros ...',
-      duration: 20000
+      duration: 20000,
+      spinner: "dots"
     }).then(loading => loading.present());
 
     await this.api.getCharacters(this.offset, this.limit)
