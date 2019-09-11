@@ -1,8 +1,8 @@
-<ng-container *ngIf="query == undefined || character.name.toLowerCase().indexOf(query) > -1">
+<ng-container  *ngIf="query == undefined || character.name.toLowerCase().indexOf(query) > -1">
     <ion-item button (click)="openCharacterDetails()">
         <ion-thumbnail slot="start">
             <ion-img [src]="imageSource"></ion-img>
         </ion-thumbnail>
-        <ion-label>{{character.name}}</ion-label>
+        <ion-label class="character-name">{{character.name}}</ion-label>
     </ion-item>
 </ng-container>
