@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf = "data!==undefined && data.hasOwnProperty('description')">{{data.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <img [src]="imageSource" />
+    <ion-card-header>
+      <ion-card-subtitle outline color="primary">Comic</ion-card-subtitle>
+      <ion-card-title *ngIf = "data!==undefined && data.hasOwnProperty('description')">{{data.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf = "data!==undefined && data.hasOwnProperty('description')">
+      {{data.description}}
+    </ion-card-content>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label outline color="primary">Creaters</ion-label>
+      </ion-list-header>
+      <ng-container *ngFor="let creator of data.creators.items">
+        <ion-item>{{creator.name}}</ion-item>
+      </ng-container>
+
+      <ion-list-header>
+        <ion-label outline color="primary">Characters</ion-label>
+      </ion-list-header>
+      <ng-container *ngFor="let character of data.characters.items">
+        <ion-item>{{character.name}}</ion-item>
+      </ng-container>
+      
+    </ion-list>
+
+    <ion-chip outline color="primary">
+      <ion-icon name="pricetag"></ion-icon>
+      <ion-label *ngIf = "data!==undefined && data.hasOwnProperty('prices')">{{data.prices[0].price}} $</ion-label>
+    </ion-chip>
+
+
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+</ion-footer>
