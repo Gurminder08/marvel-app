@@ -36,7 +36,7 @@ export class CharactersPage implements OnInit {
       spinner: "dots"
     }).then(loading => loading.present());
 
-    await this.api.getCharacters(this.offset, this.limit)
+    await this.api.getCharacters(this.offset, this.limit, this.query)
       .subscribe(res => {
         //Merge previous list and new list of characters using ES6 spread operator 
         this.characters = [...this.characters, ...res['data'].results];
@@ -48,7 +48,7 @@ export class CharactersPage implements OnInit {
         // this.loading.dismiss();
         this.loadingController.dismiss();
       }, err => {
-        console.log(err);;
+        console.log(err);
       });
   }
 
@@ -81,5 +81,26 @@ export class CharactersPage implements OnInit {
   searchCharacter(event) {
     this.query = event.target.value.toLowerCase();
   }
+
+  searchCharacterByName(): void {
+    this.reset();
+    this.getCharacters();
+  }
+
+  reset(): void {
+    this.characters = [];
+    this.displayCharacters = [];
+    this.characterDisplay = false;  
+    this.offset =  0;
+    this.limit = 20;
+    this.totalPages = 0;
+    this.pageNumber = 1;
+  }
+
+  resetSearch(): void {
+    this.reset();
+    this.query = "";
+    this.getCharacters();
+}
 
 }
