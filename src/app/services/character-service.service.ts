@@ -13,26 +13,19 @@ export class CharacterService {
 
   constructor(private http: HttpClient) { }
 
-    // get characters
-    getCharacters(  offset: number , limit: number): Observable<Character[]> {
-      const paginatedURL = this.getPaginatedURL( offset, limit );     
-      
-      return this.http.get<Character[]>(paginatedURL)
-        .pipe(
-          tap(characters => console.log('fetched all characters')),
-          catchError(handleError('getCharacters',[]))
-        );
-    }
+   // get characters
+   getCharacters(offset: number = 20, limit: number =0, name: string = ''): Observable<Character[]> {
+    const paginatedURL = this.getPaginatedURL( offset, limit, name );     
     
-    getPaginatedURL(offset: number , limit: number): string {
-      if( !limit ) {
-        limit = 20;
-      }
-
-      if( !offset ) {
-        offset = 0;
-      }
-
-      return `${BASE_URL}/characters?limit=${limit}&offset=${offset}&ts=${TS}&apikey=${API_KEY}&hash=${MD5_HASH}` ;
-    }
+    return this.http.get<Character[]>(paginatedURL)
+      .pipe(
+        tap(characters => console.log('fetched all characters')),
+        catchError(handleError('getCharacters',[]))
+      );
+  }
+  
+  getPaginatedURL(offset: number = 20, limit: number =0, name: string = ''): string {
+    const additionalParam =  ( name != '' ) ? `&nameStartsWith=${name}` : ''
+    return `${BASE_URL}/characters?limit=${limit}&offset=${offset}&ts=${TS}&apikey=${API_KEY}&hash=${MD5_HASH}${additionalParam}`;
+  }
 }
