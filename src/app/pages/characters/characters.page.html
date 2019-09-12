@@ -5,7 +5,7 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar color="dark">
-    <ion-searchbar placeholder="Search by name ... " (ionInput)="searchCharacter($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Search by name ... " (ionInput)="searchCharacter($event)" cancelButtonText="Reset" showCancelButton="always" (keyup.enter)="searchCharacterByName($event)" placeholder="Search by name ... " (ionClear)="resetSearch()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
